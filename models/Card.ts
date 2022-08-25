@@ -64,3 +64,8 @@ export class Card {
         this.phraseAudio = getUrl(this.phrase);
     }
 }
+
+export interface languageConfig {
+    input: string,
+    output: string
+}

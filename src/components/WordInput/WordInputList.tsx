@@ -1,15 +1,13 @@
 import {NextPage} from "next";
 import WordInput from "./WordInput";
-import {cardInput, wordInputListProps} from "../../../models/wordInputModel";
+import {cardInput, wordInputListProps} from "../../../models/WordInputProps";
 import {nanoid} from "nanoid";
 
 const WordInputList: NextPage<wordInputListProps> = ({wordList, setWordList}) => {
     
     const onUpdateWord = (input: cardInput, index: number) => {
         let newArray = [...wordList];
-        console.log('OI', newArray);
         newArray[index] = input;
-        console.log('MM' ,newArray[index]);
         setWordList(newArray)
     }
     

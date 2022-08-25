@@ -1,7 +1,7 @@
 import {NextPage} from "next";
 import classes from './WordInput.module.css';
 import React, {useRef, useState} from "react";
-import {cardInput, wordInputProps} from "../../../models/wordInputModel";
+import {cardInput, wordInputProps} from "../../../models/WordInputProps";
 
 const WordInput: NextPage<wordInputProps> = ({id,index,addInput,onUpdateWord,onDeleteWord, isFirstElement}) => {
     const [isInputAdded, setIsInputAdded] = useState<boolean>(false);

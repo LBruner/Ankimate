@@ -21,3 +21,8 @@ export interface wordInputProps{
     onDeleteWord: (id: number) => void;
     isFirstElement: boolean
 }
+
+export interface WordInputConfigProps{
+    deck: string,
+    setDeck: (selectedDeck: string) => void;
+}
