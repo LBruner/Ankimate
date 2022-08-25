@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from "react";
 import {NextPage} from "next";
 import userDecks from '../../../user/decks.json';
-import {WordInputConfigProps} from "../../../models/WordInputProps";
+import {DeckProps} from "../../../models/WordInputProps";
 
-const DeckPicker: NextPage<WordInputConfigProps> = ({deck, setDeck}) => {
+const DeckPicker: NextPage<DeckProps> = ({deck, setDeck}) => {
     const [filteredDeck, setFilteredDeck] = useState([...userDecks.allDecks]);
 
     const searchBoxRef =  useRef<HTMLInputElement>(null);
@@ -27,8 +27,7 @@ const DeckPicker: NextPage<WordInputConfigProps> = ({deck, setDeck}) => {
         setFilteredDeck(filteredDecks)
         setDeck(selectRef.current!.value)
     }
-
-  
+    
     return (
         <>
             <input ref={searchBoxRef} type="text" onChange={onSearchLanguage} placeholder={"Search..."} id={"search"}/>

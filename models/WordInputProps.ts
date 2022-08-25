@@ -1,4 +1,5 @@
 import {Dispatch, SetStateAction} from "react";
+import {languageConfig} from "./Card";
 
 export interface cardInput {
     id: string,
@@ -24,5 +25,22 @@ export interface wordInputProps{
 
 export interface WordInputConfigProps{
     deck: string,
-    setDeck: (selectedDeck: string) => void;
+    setDeck: (selectedDeck: string) => void,
+    language: languageConfig, 
+    setLanguage: (newLang: languageConfig) => void
 }
+
+export interface DeckProps{
+    deck: string,
+    setDeck: (selectedDeck: string) => void,
+}
+
+export interface languagePickerProps{
+    setDeck: (selectedDeck: string) => void,
+    language: languageConfig,
+    setLanguage: (newLang: languageConfig) => void
+}
+
+export type availableOutputs = 'en' | 'pt'
+
+export type availableInput = 'en' | 'fr'

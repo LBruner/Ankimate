@@ -1,5 +1,6 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
 import {processCards} from "../../helpers/addCardsHelper";
+import {WordsData} from "../../models/Words";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
@@ -9,8 +10,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return;
         }
 
-        const {words} = req.body;
-        const cardsAdded = await processCards(words);
+        const {words, deck, language} = req.body;
+        const wordsData: WordsData = {words,deck,language}
+        console.log(language);
+        const cardsAdded = await processCards(wordsData);
         res.send({name: cardsAdded});
     }
 }

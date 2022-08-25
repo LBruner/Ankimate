@@ -2,12 +2,13 @@ import axios from "axios";
 
 const googleTTS = require('google-tts-api');
 import stringSimilarity from 'string-similarity';
+import {availableInput} from "./WordInputProps";
 
 export class Card {
     public wordAudio: string = '';
     public phraseAudio: string = '';
 
-    constructor(public word: string, public phonetic: string, public phrase: string, public translation: string) {
+    constructor(public word: string, public phonetic: string, public phrase: string, public translation: string, public deck: string, public language: availableInput) {
         this.getAudioFiles();
     }
 
@@ -22,11 +23,11 @@ export class Card {
         return {
             "action": "addNote", "version": 6, "params": {
                 "note": {
-                    "deckName": 'English', "modelName": "Basic", "fields": {
+                    "deckName": this.deck, "modelName": "Basic", "fields": {
                         "Front": frontField,
                         "Back": backField
                     }, "options": {
-                        "allowDuplicate": false, "duplicateScope": "deck", "duplicateScopeOptions": {
+                        "allowDuplicate": false, "duplicateScope": this.deck, "duplicateScopeOptions": {
                             "deckName": 'English', "checkChildren": true, "checkAllModels": false
                         }
                     }, "audio": [{
@@ -60,12 +61,13 @@ export class Card {
         const getUrl = (searchTerm: string) => googleTTS.getAudioUrl(searchTerm, {
             lang: 'en', slow: false, host: 'https://translate.google.com',
         });
+        console.log(this.word);
         this.wordAudio = getUrl(this.word);
         this.phraseAudio = getUrl(this.phrase);
     }
 }
 
 export interface languageConfig {
-    input: string,
-    output: string
+    input: 'en' | 'fr'
+    output: 'en' | 'pt'
 }
