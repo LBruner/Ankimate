@@ -1,7 +1,26 @@
 .input-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 30px 5px;
+}
+
+.input-container input{
+    font-size: 17px;
+    padding: 10px;
+    background-color: #212121;
+    border: 1px solid #323232;
+}
+
+.input-container input:focus{
+    background-color: #323232;
+    color: #FC85AE;
     
 }
 
+.input-container input::selection{
+    border: 0;
+}
 .button-disabled{
     background-color: aqua;
 }

@@ -53,13 +53,13 @@ export class Card {
         const matchWord = bestMatch.target;
 
         const frontField = this.phrase.replace(matchWord, `<font color="#1a90f0">${matchWord}</font>`);
-        const backField = `<font color="#1a90f0">${this.word}</font> ${this.phonetic} <br><b>${this.translation}</b>`;
+        const backField = `<font color="#1a90f0">${this.word.toUpperCase()}</font> ${this.phonetic} <br><b>${this.translation.toUpperCase()}</b>  `;
         return {frontField, backField};
     }
 
     private getAudioFiles() {
         const getUrl = (searchTerm: string) => googleTTS.getAudioUrl(searchTerm, {
-            lang: 'en', slow: false, host: 'https://translate.google.com',
+            lang: this.language, slow: false, host: 'https://translate.google.com',
         });
         console.log(this.word);
         this.wordAudio = getUrl(this.word);

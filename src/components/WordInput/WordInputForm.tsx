@@ -7,6 +7,7 @@ import {nanoid} from "nanoid";
 import axios from "axios";
 import {languageConfig} from "../../../models/Card";
 import {WordsData} from "../../../models/Words";
+import classes from './WordInputForm.module.css';
 
 const WordInputForm: NextPage = _ => {
     const [wordsList, setWordsList] = useState<cardInput[]>([{id: nanoid(),phonetic: '', phrase: '', translation: '', word: ''}]);
@@ -23,10 +24,10 @@ const WordInputForm: NextPage = _ => {
     }
     
     return (
-        <form onSubmit={onSubmitHandler}>
+        <form className={classes['form-container']}  onSubmit={onSubmitHandler}>
             <WordInputConfig deck={curDeck} setDeck={setCurDeck} language={language} setLanguage={setLanguage}/>
             <WordInputList wordList={wordsList} setWordList={setWordsList}/>
-            <button type={"submit"}>Add Cards.</button>
+            <button className={classes['add-card-btn']} type={"submit"}>Add Cards.</button>
         </form>
     );
 };
