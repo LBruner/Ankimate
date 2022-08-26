@@ -21,6 +21,7 @@
 .input-container input::selection{
     border: 0;
 }
+
 .button-disabled{
-    background-color: aqua;
+    background-color: rgba(199, 195, 195, 0.66);
 }

@@ -3,8 +3,27 @@
     flex-direction: column;
 }
 
+.form-container input:hover{
+    background-color: #323232;
+}
+
 .form-container button{
-    padding: 6px;
+    padding: 10px;
+    background-color: #b25d5d;
+    border: 0;
+}
+
+
+.form-container button:disabled:hover{
+    background-color: #908c8c;
+}
+
+.form-container button:disabled{
+    background-color: #716e6e;
+}
+
+.form-container button:hover{
+    background-color: #b23a3a;
 }
 
 .form-container .add-card-btn{
@@ -14,6 +33,7 @@
     padding: 15px;
     background-color: #0a7da0;
     color: #020202;
+    margin-bottom: 15px;
 }
 
 .form-container .add-card-btn:hover {
