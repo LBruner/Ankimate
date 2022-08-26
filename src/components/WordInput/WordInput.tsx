@@ -25,6 +25,12 @@ const WordInput: NextPage<wordInputProps> = ({id,index,addInput,onUpdateWord,onD
         
         if(!isInputAdded || isFirstElement){
             addInput();
+            setTimeout(() =>{
+                window.scrollTo({
+                    top: window.scrollY + window.innerHeight,
+                    behavior: 'smooth'
+                })
+            }, 500)
             setIsInputAdded(true)
         }
     }
@@ -40,7 +46,7 @@ const WordInput: NextPage<wordInputProps> = ({id,index,addInput,onUpdateWord,onD
             <input onChange={onWordUpdate} ref={phoneticRef} type="text" placeholder='Phonetic...'/>
             <input onChange={onWordUpdate} ref={phraseRef} type="text" placeholder='Phrase...'/>
             <input onChange={onWordUpdate} ref={translationRef} type="text" placeholder='Translation...'/>
-            <button className={isFirstElement ? classes['button-disabled'] : ''} type={"button"} onClick={onDeleteInput}>X</button>
+            <button className={isFirstElement ? classes['button-disabled'] : ''} type={"button"} disabled={isFirstElement} onClick={onDeleteInput}>X</button>
         </div>
     );
 };
