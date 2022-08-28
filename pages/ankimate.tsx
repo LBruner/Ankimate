@@ -1,12 +1,13 @@
 import {NextPage} from "next";
-import Navbar from "../src/components/UI/Navbar";
 import WordInputForm from "../src/components/WordInput/WordInputForm";
+import WaitScreen from "../src/components/UI/WaitScreen";
 
 const Ankimate: NextPage = () => {
+
     return (
         <>
-        <Navbar/>
-        <WordInputForm/>
+            <WaitScreen/>
+            <WordInputForm/>
         </>
     );
 };

@@ -29,6 +29,7 @@ const WordInputForm: NextPage = _ => {
         dispatch(uiActions.toggleIsWaiting());
         const wordsData: WordsData = {words: wordsList, deck: curDeck, language};
         const res = await axios.post('http://localhost:3000/api/addCards', wordsData).catch(error => console.log('e', error));
+        dispatch(uiActions.toggleIsWaiting());
 
         console.log(res);
     };
