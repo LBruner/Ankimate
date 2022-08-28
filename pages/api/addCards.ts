@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const wordsData: WordsData = {words,deck,language}
         console.log(language);
         const cardsAdded = await processCards(wordsData);
-        res.send({name: cardsAdded});
+        res.send({cardsAdded});
     }
 }
 

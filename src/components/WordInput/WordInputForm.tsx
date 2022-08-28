@@ -10,6 +10,7 @@ import {WordsData} from "../../../models/Words";
 import classes from './WordInputForm.module.css';
 import {useDispatch} from "react-redux";
 import {uiActions} from "../store/UISlice";
+import {createNotification} from "../../../models/Notification";
 
 const WordInputForm: NextPage = _ => {
     const [wordsList, setWordsList] = useState<cardInput[]>([{
@@ -21,25 +22,31 @@ const WordInputForm: NextPage = _ => {
     }]);
     const [curDeck, setCurDeck] = useState<string>('English');
     const [language, setLanguage] = useState<languageConfig>({input: 'en', output: 'pt',});
-    const dispatch = useDispatch()
-    
+    const dispatch = useDispatch();
+
+    type wordsAdded = {
+        cardsAdded: string[]
+    };
+
     const onSubmitHandler = async (e: React.FormEvent) => {
         e.preventDefault();
 
         dispatch(uiActions.toggleIsWaiting());
         const wordsData: WordsData = {words: wordsList, deck: curDeck, language};
-        const res = await axios.post('http://localhost:3000/api/addCards', wordsData).catch(error => console.log('e', error));
+        const response = await axios.post<wordsAdded>('http://localhost:3000/api/addCards', wordsData).catch(error => console.log('e', error));
+
+        createNotification(response?.data.cardsAdded!, dispatch);
         dispatch(uiActions.toggleIsWaiting());
 
-        console.log(res);
+        console.log(response?.data.cardsAdded);
     };
-
+    
     const listenForEnterKey = (event: React.KeyboardEvent) => {
         if (event.code === '13') {
-            onSubmitHandler(event)
+            onSubmitHandler(event);
         }
-    }
-    
+    };
+
     return (
         <form className={classes['form-container']} onSubmit={onSubmitHandler} onKeyDown={listenForEnterKey}>
             <WordInputConfig deck={curDeck} setDeck={setCurDeck} language={language} setLanguage={setLanguage}/>
