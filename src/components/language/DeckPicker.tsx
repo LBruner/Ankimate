@@ -6,28 +6,28 @@ import {DeckProps} from "../../../models/WordInputProps";
 const DeckPicker: NextPage<DeckProps> = ({deck, setDeck}) => {
     const [filteredDeck, setFilteredDeck] = useState([...userDecks.allDecks]);
 
-    const searchBoxRef =  useRef<HTMLInputElement>(null);
+    const searchBoxRef = useRef<HTMLInputElement>(null);
     const selectRef = useRef<HTMLSelectElement>(null);
 
     useEffect(() => {
-        const getUserData = async () =>{
-            await fetch('/api/fetchDecks')
-        }
+        const getUserData = async () => {
+            await fetch('/api/fetchDecks');
+        };
 
         if (userDecks.allDecks.length === 0)
-            getUserData()
+            getUserData();
     }, []);
     
     const onChangeDeck = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setDeck(event.target.value)
+        setDeck(event.target.value);
     };
 
-    const onSearchLanguage = ()=>{
-        const filteredDecks = userDecks.allDecks.filter(deckName => deckName.toLowerCase().startsWith(searchBoxRef.current!.value))
-        setFilteredDeck(filteredDecks)
-        setDeck(selectRef.current!.value)
-    }
-    
+    const onSearchLanguage = () => {
+        const filteredDecks = userDecks.allDecks.filter(deckName => deckName.toLowerCase().startsWith(searchBoxRef.current!.value));
+        setFilteredDeck(filteredDecks);
+        setDeck(selectRef.current!.value);
+    };
+
     return (
         <>
             <input ref={searchBoxRef} type="text" onChange={onSearchLanguage} placeholder={"Search..."} id={"search"}/>

@@ -3,10 +3,12 @@ import classes from './Navbar.module.css';
 import Link from "next/link";
 import Image from 'next/image';
 import favicon from '../../../public/favicon.ico'
+import {useSelector} from "react-redux";
+import {RootState} from "../store/StoreIndex";
 
 const Navbar: NextPage = _ => {
-    // const fieldCount = useSelector(state => state.ui.fieldCount);
-
+    const fieldCount = useSelector((state: RootState) => state.ui.fieldCount);
+    
     return (
         <nav>
             <div className={classes.navbar}>
@@ -15,7 +17,7 @@ const Navbar: NextPage = _ => {
                     <p>Ankimate</p>
                 </div>
                 <div className={classes['field-count']}>
-                    {/*<p>Words: {fieldCount}</p>*/}
+                    <p>Words: {fieldCount}</p>
                 </div>
                 <div className={classes.options}>
                     <Link href={'/ankimate'}>Add Cards</Link>

@@ -5,7 +5,7 @@ import {cardInput, wordInputProps} from "../../../models/WordInputProps";
 
 const WordInput: NextPage<wordInputProps> = ({id,index,addInput,onUpdateWord,onDeleteWord, isFirstElement}) => {
     const [isInputAdded, setIsInputAdded] = useState<boolean>(false);
-
+    
     const wordRef = useRef<HTMLInputElement>(null);
     const phoneticRef = useRef<HTMLInputElement>(null);
     const phraseRef = useRef<HTMLInputElement>(null);

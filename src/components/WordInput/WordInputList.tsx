@@ -2,13 +2,17 @@ import {NextPage} from "next";
 import WordInput from "./WordInput";
 import {cardInput, wordInputListProps} from "../../../models/WordInputProps";
 import {nanoid} from "nanoid";
+import {useDispatch} from "react-redux";
+import {uiActions} from "../store/UISlice";
 
 const WordInputList: NextPage<wordInputListProps> = ({wordList, setWordList}) => {
+    const dispatch = useDispatch();
     
     const onUpdateWord = (input: cardInput, index: number) => {
         let newArray = [...wordList];
         newArray[index] = input;
         setWordList(newArray)
+        dispatch(uiActions.setFieldCount({fieldCount : wordList.length - 1}))
     }
     
     const addInput = () =>{
