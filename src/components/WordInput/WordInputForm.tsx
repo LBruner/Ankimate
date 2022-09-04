@@ -2,8 +2,7 @@ import {NextPage} from "next";
 import WordInputList from "./WordInputList";
 import WordInputConfig from "./WordInputConfig";
 import React, {useState} from "react";
-import {cardInput} from "../../../models/WordInputProps";
-import {nanoid} from "nanoid";
+import {CardInput} from "../../../models/WordInputProps";
 import axios from "axios";
 import {languageConfig} from "../../../models/Card";
 import {WordsData} from "../../../models/Words";
@@ -11,15 +10,10 @@ import classes from './WordInputForm.module.css';
 import {useDispatch} from "react-redux";
 import {uiActions} from "../store/UISlice";
 import {createNotification} from "../../../models/Notification";
+import {defaultState} from "../../../models/WordList";
 
 const WordInputForm: NextPage = _ => {
-    const [wordsList, setWordsList] = useState<cardInput[]>([{
-        id: nanoid(),
-        phonetic: '',
-        phrase: '',
-        translation: '',
-        word: ''
-    }]);
+    const [wordsList, setWordsList] = useState<CardInput[]>([defaultState]);
     const [curDeck, setCurDeck] = useState<string>('English');
     const [language, setLanguage] = useState<languageConfig>({input: 'en', output: 'pt',});
     const dispatch = useDispatch();
@@ -39,6 +33,7 @@ const WordInputForm: NextPage = _ => {
         dispatch(uiActions.toggleIsWaiting());
 
         console.log(response?.data.cardsAdded);
+        setWordsList([defaultState])
     };
     
     const listenForEnterKey = (event: React.KeyboardEvent) => {

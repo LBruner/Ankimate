@@ -1,8 +1,8 @@
-import {cardInput} from "./WordInputProps";
+import {CardInput} from "./WordInputProps";
 import {languageConfig} from "./Card";
 
 export interface WordsData{
     language: languageConfig,
-    words: cardInput[],
+    words: CardInput[],
     deck: string
 }
