@@ -1,6 +1,6 @@
 import {NextPage} from "next";
 import WordInput from "./WordInput";
-import {cardInput, wordInputListProps} from "../../../models/WordInputProps";
+import {CardInput, wordInputListProps} from "../../../models/WordInputProps";
 import {nanoid} from "nanoid";
 import {useDispatch} from "react-redux";
 import {uiActions} from "../store/UISlice";
@@ -8,7 +8,7 @@ import {uiActions} from "../store/UISlice";
 const WordInputList: NextPage<wordInputListProps> = ({wordList, setWordList}) => {
     const dispatch = useDispatch();
     
-    const onUpdateWord = (input: cardInput, index: number) => {
+    const onUpdateWord = (input: CardInput, index: number) => {
         let newArray = [...wordList];
         newArray[index] = input;
         setWordList(newArray)
@@ -21,7 +21,7 @@ const WordInputList: NextPage<wordInputListProps> = ({wordList, setWordList}) =>
     
     const onDeleteInput = (index: number) =>{
         if (wordList.length === 1) return;
-        let newWordList: cardInput[] = [...wordList];
+        let newWordList: CardInput[] = [...wordList];
         newWordList = newWordList.filter((item, i) => i !== index);
         setWordList(newWordList);
     }
@@ -29,10 +29,14 @@ const WordInputList: NextPage<wordInputListProps> = ({wordList, setWordList}) =>
     const isFirstElement = (curInput: number): boolean => {
         return curInput === 0 && wordList.length <= 1
     }
+
+    const isLastElement = (curInput: number): boolean => {
+        return curInput === wordList.length - 1;
+    }
     
     return (
         <div>
-            {wordList.length > 0 && wordList.map((item,index) => <WordInput key={item.id} id={item.id} index={index} onUpdateWord={onUpdateWord} addInput={addInput} onDeleteWord={onDeleteInput} isFirstElement={isFirstElement(index)}/>)}
+            {wordList.length > 0 && wordList.map((item,index) => <WordInput key={item.id} id={item.id} index={index} onUpdateWord={onUpdateWord} addInput={addInput} onDeleteWord={onDeleteInput} isLastElement={isLastElement(index)} isFirstElement={isFirstElement(index)}/>)}
         </div>
     );
 };

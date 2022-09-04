@@ -1,7 +1,7 @@
 import {Dispatch, SetStateAction} from "react";
 import {languageConfig} from "./Card";
 
-export interface cardInput {
+export interface CardInput {
     id: string,
     word: string,
     phonetic: string,
@@ -10,17 +10,18 @@ export interface cardInput {
 }
 
 export interface wordInputListProps {
-    wordList: cardInput[];
-    setWordList: Dispatch<SetStateAction<cardInput[]>>
+    wordList: CardInput[];
+    setWordList: Dispatch<SetStateAction<CardInput[]>>
 }
 
 export interface wordInputProps{
     index: number,
     id: string, 
     addInput: () => void;
-    onUpdateWord: (word: cardInput, id: number) => void;
+    onUpdateWord: (word: CardInput, id: number) => void;
     onDeleteWord: (id: number) => void;
-    isFirstElement: boolean
+    isFirstElement: boolean,
+    isLastElement: boolean
 }
 
 export interface WordInputConfigProps{
