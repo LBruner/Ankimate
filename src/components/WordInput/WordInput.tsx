@@ -42,10 +42,10 @@ const WordInput: NextPage<wordInputProps> = ({id,index,addInput,onUpdateWord,onD
     
     return (
         <div className={classes['input-container']}>
-            <input onChange={onWordUpdate} ref={wordRef} type="text" placeholder='Word...'/>
+            <input onChange={onWordUpdate} required ref={wordRef} type="text" placeholder='Word...'/>
             <input onChange={onWordUpdate} ref={phoneticRef} type="text" placeholder='Phonetic...'/>
-            <input onChange={onWordUpdate} ref={phraseRef} type="text" placeholder='Phrase...'/>
-            <input onChange={onWordUpdate} ref={translationRef} type="text" placeholder='Translation...'/>
+            <input onChange={onWordUpdate} required ref={phraseRef} type="text" placeholder='Phrase...'/>
+            <input onChange={onWordUpdate} required  ref={translationRef} type="text" placeholder='Translation...'/>
             <button className={isFirstElement ? classes['button-disabled'] : ''} type={"button"} disabled={isFirstElement} onClick={onDeleteInput}>X</button>
         </div>
     );
