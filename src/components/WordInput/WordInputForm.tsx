@@ -2,40 +2,47 @@ import {NextPage} from "next";
 import WordInputList from "./WordInputList";
 import WordInputConfig from "./WordInputConfig";
 import React, {useState} from "react";
-import {CardInput} from "../../../models/WordInputProps";
-import axios from "axios";
+import {CardInput} from "../../../models/WordInput";
+import axios, {AxiosError} from "axios";
 import {languageConfig} from "../../../models/Card";
 import {WordsData} from "../../../models/Words";
 import classes from './WordInputForm.module.css';
 import {useDispatch} from "react-redux";
 import {uiActions} from "../store/UISlice";
-import {createNotification} from "../../../models/Notification";
-import {defaultState} from "../../../models/WordList";
+import {getNotificationMessage} from "../../../models/Notification";
+import {nanoid} from "nanoid";
+
+export const getDefaultState = () => {
+    return {id: nanoid(), translation: '', phonetic: '', phrase: '', word: ''};
+};
 
 const WordInputForm: NextPage = _ => {
-    const [wordsList, setWordsList] = useState<CardInput[]>([defaultState]);
+    const [wordsList, setWordsList] = useState<CardInput[]>([getDefaultState()]);
     const [curDeck, setCurDeck] = useState<string>('English');
     const [language, setLanguage] = useState<languageConfig>({input: 'en', output: 'pt',});
     const dispatch = useDispatch();
-
-    type wordsAdded = {
-        cardsAdded: string[]
-    };
 
     const onSubmitHandler = async (e: React.FormEvent) => {
         e.preventDefault();
 
         dispatch(uiActions.toggleIsWaiting());
         const wordsData: WordsData = {words: wordsList, deck: curDeck, language};
-        const response = await axios.post<wordsAdded>('http://localhost:3000/api/addCards', wordsData).catch(error => console.log('e', error));
+        let notification;
+        try {
+            const response = await axios.post<{ cardsAdded: string[] }>('http://localhost:3000/api/addCards', wordsData);
+            notification = getNotificationMessage(null, response!);
+        } catch (error) {
+            notification = getNotificationMessage(error as AxiosError<{ error: string }>, null);
+        }
+        finally {
+            dispatch(uiActions.showNotification(notification))
+        }
 
-        createNotification(response?.data.cardsAdded!, dispatch);
         dispatch(uiActions.toggleIsWaiting());
 
-        console.log(response?.data.cardsAdded);
-        setWordsList([defaultState])
+        setWordsList([getDefaultState()]);
     };
-    
+
     const listenForEnterKey = (event: React.KeyboardEvent) => {
         if (event.code === '13') {
             onSubmitHandler(event);

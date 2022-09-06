@@ -14,14 +14,17 @@ export interface wordInputListProps {
     setWordList: Dispatch<SetStateAction<CardInput[]>>
 }
 
-export interface wordInputProps{
+export interface wordInput {
     index: number,
     id: string, 
-    addInput: () => void;
-    onUpdateWord: (word: CardInput, id: number) => void;
-    onDeleteWord: (id: number) => void;
+    
+    wordFunctions: {
+        addInput: () => void;
+        onUpdateWord: (word: CardInput, id: number) => void;
+        onDeleteWord: (id: number) => void;
+    }
     isFirstElement: boolean,
-    isLastElement: boolean
+    isLastElement: boolean,
 }
 
 export interface WordInputConfigProps{

@@ -1,13 +1,13 @@
 import {NextPage} from "next";
 import WordInput from "./WordInput";
-import {CardInput, wordInputListProps} from "../../../models/WordInputProps";
-import {nanoid} from "nanoid";
+import {CardInput, wordInputListProps} from "../../../models/WordInput";
 import {useDispatch} from "react-redux";
 import {uiActions} from "../store/UISlice";
+import {getDefaultState} from "./WordInputForm";
 
 const WordInputList: NextPage<wordInputListProps> = ({wordList, setWordList}) => {
     const dispatch = useDispatch();
-    
+
     const onUpdateWord = (input: CardInput, index: number) => {
         let newArray = [...wordList];
         newArray[index] = input;
@@ -16,7 +16,7 @@ const WordInputList: NextPage<wordInputListProps> = ({wordList, setWordList}) =>
     }
     
     const addInput = () =>{
-        setWordList([...wordList, {id: nanoid(), word: '', translation: '', phrase: '', phonetic: ''}])
+        setWordList([...wordList, getDefaultState()])
     }
     
     const onDeleteInput = (index: number) =>{
@@ -24,19 +24,21 @@ const WordInputList: NextPage<wordInputListProps> = ({wordList, setWordList}) =>
         let newWordList: CardInput[] = [...wordList];
         newWordList = newWordList.filter((item, i) => i !== index);
         setWordList(newWordList);
-    }
+    };
 
     const isFirstElement = (curInput: number): boolean => {
-        return curInput === 0 && wordList.length <= 1
-    }
+        return curInput === 0 && wordList.length <= 1;
+    };
 
     const isLastElement = (curInput: number): boolean => {
         return curInput === wordList.length - 1;
-    }
-    
+    };
+
+
+    const wordFunctions = {onUpdateWord: onUpdateWord, addInput, onDeleteWord: onDeleteInput};
     return (
         <div>
-            {wordList.length > 0 && wordList.map((item,index) => <WordInput key={item.id} id={item.id} index={index} onUpdateWord={onUpdateWord} addInput={addInput} onDeleteWord={onDeleteInput} isLastElement={isLastElement(index)} isFirstElement={isFirstElement(index)}/>)}
+            {wordList.length > 0 && wordList.map((item,index) => <WordInput key={item.id} id={item.id} index={index} wordFunctions={wordFunctions} isLastElement={isLastElement(index)} isFirstElement={isFirstElement(index)}/>)}
         </div>
     );
 };

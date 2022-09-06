@@ -4,14 +4,13 @@ import {WordsData} from "../../models/Words";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
-
         if (!await isAnkiConnected()) {
-            res.status(400).json({error: `Cant Connect to Anki connect.`});
+            res.status(700).send({error: `Cant Connect to Anki connect.`});
             return;
         }
 
         const {words, deck, language} = req.body;
-        const wordsData: WordsData = {words,deck,language}
+        const wordsData: WordsData = {words, deck, language};
         console.log(language);
         const cardsAdded = await processCards(wordsData);
         res.send({cardsAdded});

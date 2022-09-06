@@ -1,4 +1,4 @@
-import {CardInput} from "./WordInputProps";
+import {CardInput} from "./WordInput";
 import {languageConfig} from "./Card";
 
 export interface WordsData{

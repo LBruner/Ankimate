@@ -1,6 +1,6 @@
 import axios from "axios";
 import stringSimilarity from 'string-similarity';
-import {availableInput} from "./WordInputProps";
+import {availableInput} from "./WordInput";
 
 const googleTTS = require('google-tts-api');
 
@@ -27,7 +27,7 @@ export class Card {
                         "Front": frontField,
                         "Back": backField
                     }, "options": {
-                        "allowDuplicate": false, "duplicateScope": this.deck, "duplicateScopeOptions": {
+                        "allowDuplicate": true, "duplicateScope": this.deck, "duplicateScopeOptions": {
                             "deckName": 'English', "checkChildren": true, "checkAllModels": false
                         }
                     }, "audio": [{

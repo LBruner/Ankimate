@@ -8,9 +8,10 @@ import ScrollToTop from "../src/components/UI/ScrollToTop";
 
 const Ankimate: NextPage = () => {
     const notification: any = useSelector((state: RootState) => state.ui.activeNotification);
-    const showNotification = useSelector((state: RootState) => state.ui.showNotification)
+    const showNotification = useSelector((state: RootState) => state.ui.showNotification);
 
-    console.log(showNotification);
+
+    console.log('MLm');
     return (
         <>
             <WaitScreen/>
