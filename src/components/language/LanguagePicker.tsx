@@ -1,6 +1,6 @@
 import userDecks from '../../../user/decks.json';
 import {NextPage} from "next";
-import {availableInput, availableOutputs, languagePickerProps} from "../../../models/WordInputProps";
+import {availableInput, availableOutputs, languagePickerProps} from "../../../models/WordInput";
 import React from "react";
 
 const LanguagePicker: NextPage<languagePickerProps> = ({language, setLanguage, setDeck}) => {

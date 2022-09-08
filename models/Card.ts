@@ -47,12 +47,30 @@ export class Card {
     }
 
     private getCardFields() {
-        const splitPhrase = this.phrase.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '').split(' ');
+        let wordsToFormat: string[] = [];
 
-        const {bestMatch} = stringSimilarity.findBestMatch(this.word.toLowerCase(), splitPhrase);
-        const matchWord = bestMatch.target;
+        const splitPhrase = splitSentence(this.phrase);
 
-        const frontField = this.phrase.trimStart().replace(matchWord, `<font color="#1a90f0">${matchWord}</font>`);
+        if (isExpression(this.word)) {
+            console.log('isExpression');
+            const splitWord = splitSentence(this.word);
+            console.log('word', splitWord);
+
+            for (let sentence of splitWord) {
+                const {bestMatch} = stringSimilarity.findBestMatch(sentence.toLowerCase(), splitPhrase);
+                if (bestMatch.rating === 0) continue;
+                wordsToFormat.push(`${bestMatch.target}`);
+            }
+        } else {
+            const {bestMatch} = stringSimilarity.findBestMatch(this.word, splitPhrase);
+            wordsToFormat.push(`${bestMatch.target}`);
+        }
+
+        for (let sentence of wordsToFormat) {
+            this.phrase = this.phrase.replace(new RegExp(`\\b${sentence}`), `<font color="#1a90f0">${sentence}</font>`);
+        }
+
+        const frontField = this.phrase;
         const backField = `<font color="#1a90f0">${this.word.toUpperCase()}</font> ${this.phonetic} <br><b>${this.translation.toUpperCase()}</b>  `;
         return {frontField, backField};
     }
@@ -66,6 +84,14 @@ export class Card {
         this.phraseAudio = getUrl(this.phrase);
     }
 }
+
+const isExpression = (sentence: string) => {
+    return sentence.length > 1;
+};
+
+const splitSentence = (sentence: string) => {
+    return sentence.trimStart().replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '').split(' ');
+};
 
 export interface languageConfig {
     input: 'en' | 'fr';

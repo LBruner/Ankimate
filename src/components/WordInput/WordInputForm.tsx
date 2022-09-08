@@ -33,9 +33,8 @@ const WordInputForm: NextPage = _ => {
             notification = getNotificationMessage(null, response!);
         } catch (error) {
             notification = getNotificationMessage(error as AxiosError<{ error: string }>, null);
-        }
-        finally {
-            dispatch(uiActions.showNotification(notification))
+        } finally {
+            dispatch(uiActions.showNotification(notification));
         }
 
         dispatch(uiActions.toggleIsWaiting());
