@@ -10,13 +10,12 @@ const Ankimate: NextPage = () => {
     const notification: any = useSelector((state: RootState) => state.ui.activeNotification);
     const showNotification = useSelector((state: RootState) => state.ui.showNotification);
 
-
-    console.log('MLm');
     return (
         <>
             <WaitScreen/>
             <WordInputForm/>
             <ScrollToTop/>
+            
             {showNotification && <Notification notification={notification}/>}
         </>
     );

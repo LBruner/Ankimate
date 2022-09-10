@@ -1,9 +1,8 @@
 import userDecks from '../../../user/decks.json';
-import {NextPage} from "next";
 import {availableInput, availableOutputs, languagePickerProps} from "../../../models/WordInput";
 import React from "react";
 
-const LanguagePicker: NextPage<languagePickerProps> = ({language, setLanguage, setDeck}) => {
+const LanguagePicker: React.FC<languagePickerProps> = ({language, setLanguage, setDeck}) => {
 
     const onChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const newLanguage = {...language};

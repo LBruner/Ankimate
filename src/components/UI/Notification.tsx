@@ -1,11 +1,11 @@
-import type {NextPage} from 'next';
 import classes from './Notification.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {uiActions} from "../store/UISlice";
 import NotificationProps from "../../../models/Notification";
 import {RootState} from "../store/StoreIndex";
+import React from "react";
 
-const Notification: NextPage<NotificationProps> = ({notification}) => {
+const Notification: React.FC<NotificationProps> = ({notification}) => {
     const {message,status,title} = notification;
     const dispatch = useDispatch();
     const showNotification = useSelector((state: RootState) => state.ui.showNotification);

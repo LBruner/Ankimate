@@ -1,9 +1,9 @@
-import type {NextPage} from 'next';
 import {useSelector} from "react-redux";
 import {RootState} from "../store/StoreIndex";
 import classes from './WaitScreen.module.css';
+import React from "react";
 
-const WaitScreen: NextPage = () => {
+const WaitScreen: React.FC = () => {
     const isWaiting: boolean = useSelector((state: RootState) => state.ui.isWaiting);
     
     return (

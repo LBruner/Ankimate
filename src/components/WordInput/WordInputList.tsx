@@ -1,11 +1,11 @@
-import {NextPage} from "next";
 import WordInput from "./WordInput";
 import {CardInput, wordInputListProps} from "../../../models/WordInput";
 import {useDispatch} from "react-redux";
 import {uiActions} from "../store/UISlice";
 import {getDefaultState} from "./WordInputForm";
+import React from "react";
 
-const WordInputList: NextPage<wordInputListProps> = ({wordList, setWordList}) => {
+const WordInputList: React.FC<wordInputListProps> = ({wordList, setWordList}) => {
     const dispatch = useDispatch();
 
     const onUpdateWord = (input: CardInput, index: number) => {

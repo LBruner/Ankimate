@@ -1,4 +1,3 @@
-import {NextPage} from "next";
 import WordInputList from "./WordInputList";
 import WordInputConfig from "./WordInputConfig";
 import React, {useState} from "react";
@@ -16,7 +15,7 @@ export const getDefaultState = () => {
     return {id: nanoid(), translation: '', phonetic: '', phrase: '', word: ''};
 };
 
-const WordInputForm: NextPage = _ => {
+const WordInputForm: React.FC = _ => {
     const [wordsList, setWordsList] = useState<CardInput[]>([getDefaultState()]);
     const [curDeck, setCurDeck] = useState<string>('English');
     const [language, setLanguage] = useState<languageConfig>({input: 'en', output: 'pt',});

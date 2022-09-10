@@ -1,9 +1,8 @@
-import {NextPage} from "next";
 import classes from './WordInput.module.css';
 import React, {useRef, useState} from "react";
 import {CardInput, wordInput} from "../../../models/WordInput";
 
-const WordInput: NextPage<wordInput> = (props) => {
+const WordInput: React.FC<wordInput> = (props) => {
     const {id, index, isFirstElement, isLastElement,} = props;
     const {addInput, onDeleteWord, onUpdateWord} = props.wordFunctions;
 

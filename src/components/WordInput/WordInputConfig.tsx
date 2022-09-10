@@ -1,9 +1,9 @@
-import {NextPage} from "next";
 import DeckPicker from "../language/DeckPicker";
 import {WordInputConfigProps} from "../../../models/WordInput";
 import LanguagePicker from "../language/LanguagePicker";
+import React from "react";
 
-const WordInputConfig: NextPage<WordInputConfigProps> = ({deck,setDeck,language,setLanguage}) => {
+const WordInputConfig: React.FC<WordInputConfigProps> = ({deck,setDeck,language,setLanguage}) => {
     return (
         <div>
             <LanguagePicker language={language} setLanguage={setLanguage} setDeck={setDeck}/>

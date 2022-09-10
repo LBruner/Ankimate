@@ -1,12 +1,12 @@
-import {NextPage} from "next";
 import classes from './Navbar.module.css';
 import Link from "next/link";
 import Image from 'next/image';
 import favicon from '../../../public/favicon.ico'
 import {useSelector} from "react-redux";
 import {RootState} from "../store/StoreIndex";
+import React from "react";
 
-const Navbar: NextPage = _ => {
+const Navbar: React.FC = _ => {
     const fieldCount = useSelector((state: RootState) => state.ui.fieldCount);
     
     return (

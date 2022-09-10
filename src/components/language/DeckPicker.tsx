@@ -1,9 +1,8 @@
 import React, {useEffect, useRef, useState} from "react";
-import {NextPage} from "next";
 import userDecks from '../../../user/decks.json';
 import {DeckProps} from "../../../models/WordInput";
 
-const DeckPicker: NextPage<DeckProps> = ({deck, setDeck}) => {
+const DeckPicker: React.FCNextPage<DeckProps> = ({deck, setDeck}) => {
     const [filteredDeck, setFilteredDeck] = useState([...userDecks.allDecks]);
 
     const searchBoxRef = useRef<HTMLInputElement>(null);
