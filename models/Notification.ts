@@ -8,7 +8,8 @@ export default interface NotificationProps {
         title: string,
         message: string,
         status: string
-    };
+    },
+    timer: number
 }
 
 type CustomAxiosResponse = AxiosResponse<{ cardsAdded: string[] }> | null
