@@ -1,12 +1,14 @@
 import classes from './Notification.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {uiActions} from "../store/UISlice";
-import NotificationProps from "../../../models/Notification";
+import {Notification} from "../../../models/Notification";
 import {RootState} from "../store/StoreIndex";
 import React, {useEffect} from "react";
 
-const Notification: React.FC<NotificationProps> = ({notification, timer}) => {
-    const {message, status, title} = notification;
+const Notification: React.FC<Notification> = ({notification}) => {
+    const {details, timer} = notification;
+    const {title,message,status} = details;
+
     const dispatch = useDispatch();
     const showNotification = useSelector((state: RootState) => state.ui.showNotification);
 
@@ -27,12 +29,15 @@ const Notification: React.FC<NotificationProps> = ({notification, timer}) => {
     const activeClasses = `${classes.notification} ${statusClasses}`;
 
     useEffect(() => {
+        console.log('TIMER', timer);
+        console.log('mlfsa');
         if (timer){
             setTimeout(() =>{
+                console.log('M<ML');
                 dispatch(uiActions.hideNotification());
             }, timer)
         }
-    }, []);
+    }, [dispatch, timer]);
     
     const onClickHandler = () => {
         dispatch(uiActions.hideNotification());

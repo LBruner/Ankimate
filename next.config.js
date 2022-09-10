@@ -2,6 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  env:{
+    ANKICONNECT_PORT: 'http://127.0.0.1:8765'
+  }
 }
 
 module.exports = nextConfig
