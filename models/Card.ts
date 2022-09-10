@@ -52,25 +52,28 @@ export class Card {
         const splitPhrase = splitSentence(this.phrase);
 
         if (isExpression(this.word)) {
-            console.log('isExpression');
             const splitWord = splitSentence(this.word);
-            console.log('word', splitWord);
 
             for (let sentence of splitWord) {
-                const {bestMatch} = stringSimilarity.findBestMatch(sentence.toLowerCase(), splitPhrase);
-                if (bestMatch.rating === 0) continue;
+                const {bestMatch} = stringSimilarity.findBestMatch(sentence, splitPhrase);
+
+                if (bestMatch.rating < 0.5) continue;
                 wordsToFormat.push(`${bestMatch.target}`);
             }
         } else {
             const {bestMatch} = stringSimilarity.findBestMatch(this.word, splitPhrase);
             wordsToFormat.push(`${bestMatch.target}`);
+            wordsToFormat[0].toUpperCase()
         }
 
         for (let sentence of wordsToFormat) {
-            this.phrase = this.phrase.replace(new RegExp(`\\b${sentence}`), `<font color="#1a90f0">${sentence}</font>`);
+            console.log('M', this.phrase);
+            console.log(sentence[0]);
+            this.phrase = this.phrase.replace(new RegExp(`\\b${sentence}`, 'i'), `<font color="#1a90f0">${sentence}</font>`);
         }
 
         const frontField = this.phrase;
+        frontField[0].toUpperCase()
         const backField = `<font color="#1a90f0">${this.word.toUpperCase()}</font> ${this.phonetic} <br><b>${this.translation.toUpperCase()}</b>  `;
         return {frontField, backField};
     }
@@ -79,7 +82,6 @@ export class Card {
         const getUrl = (searchTerm: string) => googleTTS.getAudioUrl(searchTerm, {
             lang: this.language, slow: false, host: 'https://translate.google.com',
         });
-        console.log(this.word);
         this.wordAudio = getUrl(this.word);
         this.phraseAudio = getUrl(this.phrase);
     }
@@ -90,7 +92,7 @@ const isExpression = (sentence: string) => {
 };
 
 const splitSentence = (sentence: string) => {
-    return sentence.trimStart().replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '').split(' ');
+    return sentence.trimStart().replace(/[^a-zA-Z0-9 ]/g, '').split(' ');
 };
 
 export interface languageConfig {

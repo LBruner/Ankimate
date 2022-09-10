@@ -39,7 +39,7 @@ const WordInputForm: NextPage = _ => {
 
         dispatch(uiActions.toggleIsWaiting());
 
-        setWordsList([getDefaultState()]);
+        // setWordsList([getDefaultState()]);
     };
 
     const listenForEnterKey = (event: React.KeyboardEvent) => {
