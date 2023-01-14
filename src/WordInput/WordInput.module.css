@@ -1,0 +1,56 @@
+.input-container {
+    display: flex;
+    flex-direction: column;
+    margin: 30px 5px;
+    background-size: cover;
+}
+
+.input-container input {
+    font-size: 17px;
+    padding: 10px;
+    background-color: #212121;
+    border: 1px solid #323232;
+    opacity: 85%;
+}
+
+.input-container input:focus {
+    background-color: #323232;
+    color: #FC85AE;
+}
+
+.input-container input::selection {
+    border: 0;
+}
+
+.options-container {
+    height: 45px;
+    border: 0 !important;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.button-disabled {
+    background-color: rgba(199, 195, 195, 0.66);
+    border: 0;
+    height: 30px;
+    padding: 10px;
+}
+
+.delete-button {
+    padding: 10px;
+    height: 30px;
+    background-color: #b25d5d;
+    border: 0;
+}
+
+.english{
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/7/7f/Usa-flag-3d-silk-flag-american-flag-us-flag-3d-flag-of-usa.jpg");
+}
+
+.french{
+    background-image: url("https://cdn.pixabay.com/photo/2015/11/23/17/22/france-flag-1058699_960_720.jpg");
+    background-position: center;
+}
