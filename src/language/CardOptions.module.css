@@ -10,11 +10,9 @@
 .container button {
     height: 45px;
     border: 0 !important;
-    border-radius: 2px;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
 }
 
 .button-box:disabled:hover {

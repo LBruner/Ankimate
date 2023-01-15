@@ -15,11 +15,12 @@
 
 .input-container input:focus {
     background-color: #323232;
-    color: #FC85AE;
+    color: #fc85ae;
 }
 
-.input-container input::selection {
-    border: 0;
+.input-container input::selection{
+    background: rgb(255, 255, 255);
+    color: #ca7777;
 }
 
 .options-container {

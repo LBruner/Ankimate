@@ -1,38 +1,29 @@
 import WordInputList from "./WordInputList";
-import WordInputConfig from "./WordInputConfig";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, {useEffect} from "react";
 import classes from './WordInputForm.module.css';
-import { useDispatch } from "react-redux";
-import { uiActions } from "../store/UISlice";
-import { nanoid } from "nanoid";
-import {CardInput} from "../../models/WordInput";
-import {WordsData} from "../../models/Words";
-import CardAPIResponse from "../../models/API";
-import {getNotificationMessage} from "../../models/Notification";
-import {languageConfig} from "../../models/Card";
+import {useDispatch} from "react-redux";
+import {uiActions} from "../store/UISlice";
+import {nanoid} from "nanoid";
+import {WordInputFormProps} from "../../models/WordInput";
+import {CgFileAdd} from 'react-icons/cg';
+import {VscFiles} from 'react-icons/vsc';
 
 export const getDefaultState = () => {
-    return { id: nanoid(), translation: '', phonetic: '', phrase: '', word: ''};
+    return {id: nanoid(), translation: '', phonetic: '', phrase: '', word: ''};
 };
 
-interface WordInputFormProps {
-    isAnkiConnected: boolean;
-}
 
 //TODO refactor language
 export type Language = 'English' | 'French';
 
-const WordInputForm: React.FC<WordInputFormProps> = ({ isAnkiConnected }) => {
+const WordInputForm: React.FC<WordInputFormProps> = ({isAnkiConnected, language, wordState}) => {
     //TODO: refactor deck picking
-    const [curLanguage, setCurLanguage] = useState<Language>("English");
-    const [language, setLanguage] = useState<languageConfig>({ input: 'en', output: 'pt', });
-    const [wordsList, setWordsList] = useState<CardInput[]>([{...getDefaultState(), language: curLanguage}]);
-    const [curDeck, setCurDeck] = useState<string>('English');
-    
+    const {curLanguage, setCurLanguage} = language;
+    const {setWordsList, wordsList} = wordState;
+
     const dispatch = useDispatch();
     //TODO refactor
-    
+
 
     useEffect(() => {
         if (window && wordsList.length > 1)
@@ -46,21 +37,23 @@ const WordInputForm: React.FC<WordInputFormProps> = ({ isAnkiConnected }) => {
         e.preventDefault();
 
         dispatch(uiActions.toggleIsWaiting());
-        const wordsData: WordsData = { words: wordsList, deck: curDeck, language };
+
+        // const wordsData: WordsData = { words: wordsList, deck: curDeck, language };
         let notification;
 
-        const response = await axios.post<CardAPIResponse>('http://localhost:3000/api/addCards', wordsData);
+        // const response = await axios.post<CardAPIResponse>('http://localhost:3000/api/addCards', wordsData);
 
-        try {
-            notification = getNotificationMessage(response.data);
-        } catch (error) {
-            // notification = getNotificationMessage(error as AxiosError<{ error: string }>, null);
-        } finally {
-        }
+        // try {
+        //     notification = getNotificationMessage(response.data);
+        // } catch (error) {
+        //     // notification = getNotificationMessage(error as AxiosError<{ error: string }>, null);
+        // } finally {
+        // }
         dispatch(uiActions.showNotification(notification));
 
         dispatch(uiActions.toggleIsWaiting());
 
+        //TODO fix this
         // setWordsList([getDefaultState()]);
     };
 
@@ -70,13 +63,14 @@ const WordInputForm: React.FC<WordInputFormProps> = ({ isAnkiConnected }) => {
         }
     };
 
-    const shouldDisableButton = !isAnkiConnected;
-
+    const shouldDisableButton = !isAnkiConnected || wordsList.length === 1;
     return (
         <form className={classes['form-container']} onSubmit={onSubmitHandler} onKeyDown={listenForEnterKey}>
-            <WordInputConfig deck={curDeck} setDeck={setCurDeck} language={language} setLanguage={setLanguage} />
-            <WordInputList wordList={wordsList} setWordList={setWordsList} languageConfig={{curLanguage,setLanguage:setCurLanguage}}/>
-            <button disabled={shouldDisableButton} className={classes['add-card-btn']} type={"submit"}>Add Cards.
+            <WordInputList wordList={wordsList} setWordList={setWordsList}
+                           languageConfig={{curLanguage, setLanguage: setCurLanguage}}/>
+            <button disabled={shouldDisableButton} className={classes['add-card-btn']}
+                    type={"submit"}>Add {wordsList.length} {wordsList.length === 1 ? 'Card' : 'Cards'} {wordsList.length === 1 ?
+                <CgFileAdd className={classes.icon}/> : <VscFiles className={classes.icon}/>}
             </button>
         </form>
     );

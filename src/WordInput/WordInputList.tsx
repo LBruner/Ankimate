@@ -36,22 +36,25 @@ const WordInputList: React.FC<WordInputListProps> = ({wordList, setWordList, lan
 
     const changeCardLanguage = (id: string, language: Language) => {
         setWordList(prevState => {
-            console.log(id)
             const item = prevState.find((item) => item.id === id)
             item!.language = language;
-            return prevState
+            return [...prevState]
         })
     }
+
+    let isEnglishSet = true;
 
     const wordFunctions = {onUpdateWord, addInput, onDeleteWord: onDeleteInput, changeCardLanguage};
     return (
         <div>
-            {wordList.length > 0 && wordList.map((item, index) => <WordInput key={item.id} id={item.id} index={index}
-                                                                             wordFunctions={wordFunctions}
-                                                                             isEnglishSet={wordList[index].language === "English"}
-                                                                             languageConfig={languageConfig}
-                                                                             isLastElement={isLastElement(index)}
-                                                                             isFirstElement={isFirstElement(index)}/>)}
+            {wordList.length > 0 && wordList.map((item, index) => {
+                return <WordInput key={item.id} id={item.id} index={index}
+                                  wordFunctions={wordFunctions}
+                                  isEnglishSet={wordList[index].language === "English"}
+                                  languageConfig={languageConfig}
+                                  isLastElement={isLastElement(index)}
+                                  isFirstElement={isFirstElement(index)}/>
+            })}
         </div>
     );
 };

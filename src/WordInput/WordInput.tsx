@@ -3,9 +3,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {CardInput, WordInput} from "../../models/WordInput";
 import CardOptions from "../language/CardOptions";
 import {Language} from "./WordInputForm";
-import {GiUsaFlag} from "react-icons/all";
-import usFlag from '../../public/flags/us.png'
-import {url} from "inspector";
+
 const WordInput: React.FC<WordInput> = (props) => {
     const {id, index, isFirstElement, isLastElement, languageConfig, isEnglishSet} = props;
     const {addInput, onDeleteWord, onUpdateWord, changeCardLanguage} = props.wordFunctions;
@@ -65,7 +63,7 @@ const WordInput: React.FC<WordInput> = (props) => {
 
     const componentClasses = `${classes['input-container']} ${isEnglishSet ? classes.english : classes.french}`
     return (
-        <div className={componentClasses} style={isEnglishSet ? {backgroundImage: "https://upload.wikimedia.org/wikipedia/commons/7/7f/Usa-flag-3d-silk-flag-american-flag-us-flag-3d-flag-of-usa.jpg"} : {backgroundImage: 'https://cdn.pixabay.com/photo/2015/11/23/17/22/france-flag-1058699_960_720.jpg'}}>
+        <div className={componentClasses}>
             <input onChange={onWordUpdate} required={isRequired} ref={wordRef} type="text"
                    placeholder="Word..."/>
             <input onChange={onWordUpdate} ref={phoneticRef} type="text" placeholder="Phonetic..."/>
@@ -73,8 +71,9 @@ const WordInput: React.FC<WordInput> = (props) => {
                    placeholder="Phrase..."/>
             <input onChange={onWordUpdate} ref={translationRef} type="text"
                    placeholder="Translation..."/>
-                <CardOptions changeCardLanguage={{setFrench, setEnglish}} isEnglishSet={isEnglishSet}
-                             setLanguage={languageConfig.setLanguage} isFirstElement={isFirstElement} onDeleteInput={onDeleteInput}/>
+            <CardOptions changeCardLanguage={{setFrench, setEnglish}} isEnglishSet={isEnglishSet}
+                         setLanguage={languageConfig.setLanguage} isFirstElement={isFirstElement}
+                         onDeleteInput={onDeleteInput}/>
         </div>
     );
 };

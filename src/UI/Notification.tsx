@@ -31,7 +31,6 @@ const Notification: React.FC<Notification> = ({notification}) => {
     useEffect(() => {
         if (timer){
             setTimeout(() =>{
-                console.log('M<ML');
                 dispatch(uiActions.hideNotification());
             }, timer)
         }

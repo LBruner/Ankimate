@@ -1,18 +1,14 @@
-.button-box{
-    position: fixed;
-    /*height: 50px;*/
-    right: 0;
-    bottom: 0;
-    padding: 20px 20px;
+.button-box {
+    background-color: #ffffff;
 }
 
-.button-box svg{
-    height: 50px;
+.button-box:hover {
+    background-color: #bcb9b9;
+    transition: background-color ease-out 0.5s;
+}
+
+.icon {
+    height: 25px;
     width: 40px;
-    color: #a7a7a7;
-}
-
-.button-box svg:hover{
-    color: #dcdada;
-    transition: color ease-in 1s;
+    color: #000000;
 }

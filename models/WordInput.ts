@@ -2,6 +2,19 @@ import {Dispatch, SetStateAction} from "react";
 import {languageConfig} from "./Card";
 import {Language} from "../src/WordInput/WordInputForm";
 
+
+export interface WordInputFormProps {
+    isAnkiConnected: boolean;
+    language: {
+        curLanguage: Language,
+        setCurLanguage: Dispatch<SetStateAction<Language>>
+    },
+    wordState: {
+        wordsList: CardInput[];
+        setWordsList: Dispatch<SetStateAction<CardInput[]>>
+    }
+}
+
 export interface CardInput {
     id: string,
     word: string,

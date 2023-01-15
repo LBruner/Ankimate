@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {FaArrowCircleUp} from "react-icons/fa";
 import classes from './ScrollToTop.module.css'
+import {RxDoubleArrowUp} from 'react-icons/rx';
 
 const ScrollToTop: React.FC = _ => {
     const [showScroll, setShowScroll] = useState<boolean>(false);
@@ -26,8 +26,8 @@ const ScrollToTop: React.FC = _ => {
     if (!showScroll)
         return <></>
     return (
-        <div onClick={onClickHandler} className={classes.container}>
-            <FaArrowCircleUp></FaArrowCircleUp>
+        <div onClick={onClickHandler} className={classes['button-box']}>
+            <RxDoubleArrowUp className={classes.icon}/>
         </div>
     );
 };

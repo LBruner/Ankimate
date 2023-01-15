@@ -47,9 +47,7 @@ const AnkiConnectionFeedback: React.FC<AnkiConnectionFeedbackProps> = ({setIsAnk
         showAPIFeedback();
     }, [data, error]);
     return (
-        <div>
-
-        </div>
+        <></>
     );
 };
 export default AnkiConnectionFeedback;

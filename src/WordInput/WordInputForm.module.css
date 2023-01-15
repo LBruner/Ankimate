@@ -6,26 +6,56 @@
 .form-container .add-card-btn{
     border: 0;
     border-radius: 10px;
-    font-size: 17px;
     padding: 15px;
-    background-color: #0a7da0;
-    color: #020202;
     margin-bottom: 15px;
+    font-family: "Segoe UI";
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.form-container .add-card-btn:hover {
-    background-color: #0a6ca0;
-    transition: background-color 0.5s ease-in ;
+.icon {
+    margin-left: 5px;
+    margin-top: 3px;
+    height: 17px;
+}
+
+.form-container .add-card-btn:enabled {
+    background-color: #0a7da0;
+    color: #ffffff;
+}
+
+.form-container .add-card-btn:disabled {
+    background-color: #4e4e4e;
+    color: #a2a2a2;
+}
+
+.form-container .add-card-btn:enabled:hover {
+    background-color: #1580b1;
+    transition: background-color 0.5s ease-in;
+}
+
+.form-container .add-card-btn:disabled:hover {
+    background-color: #5d6062;
+    transition: background-color 0.5s ease-in;
+}
+
+.reset-btn {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    color: black;
 }
 
 @media (min-width: 500px) {
-    .form-container{
+    .form-container {
         margin: 10px;
     }
 }
 
 @media (min-width: 700px) {
-    .form-container{
+    .form-container {
         margin: 30px;
     }
 }

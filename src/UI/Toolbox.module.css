@@ -1,0 +1,27 @@
+.box-container {
+    position: fixed;
+    display: flex;
+    right: 0;
+    bottom: 0;
+    margin-bottom: 30px;
+    padding: 10px 10px;
+    z-index: 1;
+    animation: ease-in;
+}
+
+.box-container div {
+    height: 100%;
+    color: #ffffff;
+    padding: 11px 11px;
+    box-shadow: 15px 15px 20px 3px black;
+}
+
+.box-container div:first-child {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.box-container div:last-child {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
