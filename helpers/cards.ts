@@ -119,7 +119,7 @@ const formatData = (cardOutput: CardOutput) => {
     word = `<font color="#7d00bc">${word.toUpperCase()}</font>`
     phrase[0].toUpperCase();
     translation = `<b>${translation.toUpperCase()}</b>`
-    phonetic = `(${phonetic})`
+    phonetic = phonetic.length > 0 ? `(${phonetic})` : ''
     return {
         phrase,
         word,

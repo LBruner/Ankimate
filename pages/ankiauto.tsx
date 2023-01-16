@@ -7,6 +7,7 @@ import Notification from "../src/UI/Notification";
 import {CardInput} from "../models/WordInput";
 import ToolBox from "../src/UI/Toolbox";
 import {Language} from "../models/Words";
+import WaitScreen from "../src/UI/WaitScreen";
 
 const Ankiauto: React.FC = _ => {
     const [isAnkiConnected, setIsAnkiConnected] = useState<boolean>(false);
@@ -17,7 +18,7 @@ const Ankiauto: React.FC = _ => {
 
     return (
         <>
-            {/*<WaitScreen/>*/}
+            <WaitScreen/>
             <ToolBox setWordList={setWordsList} wordsListLength={wordsList.length}/>
             <WordInputForm isAnkiConnected={isAnkiConnected} wordState={{setWordsList, wordsList}}
                            language={{curLanguage, setCurLanguage}}/>
