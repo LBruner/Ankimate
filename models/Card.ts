@@ -102,8 +102,3 @@ export class Card {
 const isExpression = (sentence: string[]) => {
     return sentence.length > 1;
 };
-
-export interface languageConfig {
-    input: 'en' | 'fr';
-    output: 'en' | 'pt';
-}

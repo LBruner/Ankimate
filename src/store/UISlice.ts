@@ -10,10 +10,8 @@ const uiSlice = createSlice({
         activeNotification: initialNotification,
         showNotification: false,
         isWaiting: false,
-        fieldCount: 0
     }, reducers: {
         showNotification(state, action) {
-            console.log('fafs',action.payload);
             state.showNotification = true;
             const {notification} = action.payload;
             state.activeNotification = notification;
@@ -26,9 +24,6 @@ const uiSlice = createSlice({
         toggleIsWaiting(state) {
             state.isWaiting = !state.isWaiting;
         },
-        setFieldCount(state,action){
-            state.fieldCount = action.payload.fieldCount;
-        }
     }
 })
 

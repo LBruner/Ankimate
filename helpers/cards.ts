@@ -1,7 +1,8 @@
-import {getPuppeteerPage} from "./puppeteer";
-import {Word} from "../models/word";
+import {fetchData, getPuppeteerPage} from "./puppeteer";
+import {CardOutput} from "../models/cardOutput";
 import stringSimilarity from 'string-similarity'
 import axios from "axios";
+import {CardInput} from "../models/WordInput";
 
 const googleTTS = require('google-tts-api');
 
@@ -9,27 +10,24 @@ type cardsResults = {
     addedCards: Array<string>
     failedCards: Array<string>
 }
-export const processCards = async (words: Array<Word>) => {
+export const processCards = async (data: { words: Array<CardInput> }) => {
     const puppeteer = await getPuppeteerPage();
-
     const cardsResults: cardsResults = {addedCards: [], failedCards: []};
 
-    for (const word of words) {
-        const hasErrors = checkIntegrity(word)
+    for (const inputData of data.words) {
 
-        if (hasErrors) {
-            cardsResults.failedCards.push(word.wordName)
+        if (!inputData.word) {
             continue;
         }
 
         try {
-            const data: Word = await fetchData(puppeteer, word)
-            const audioData = await addAudioFiles(data);
+            const data: CardOutput = await fetchData(puppeteer, inputData)
+            const audioData: CardOutput = addAudioFiles(data);
             await addCard(audioData)
-            cardsResults.addedCards.push(word.wordName)
+            cardsResults.addedCards.push(inputData.word)
         } catch (e) {
             console.log(e)
-            cardsResults.failedCards.push(word.wordName)
+            cardsResults.failedCards.push(inputData.word)
         }
     }
 
@@ -37,52 +35,20 @@ export const processCards = async (words: Array<Word>) => {
     return cardsResults
 }
 
-const checkIntegrity = (word: Word) => {
-    if (isExpression(splitSentence(word.wordName))) {
-        if (!word.phonetic || !word.translation || !word.phrase) {
-            console.log('Missing fields...')
-            return true
-        }
-    }
-    return false;
-}
 
-const fetchData = async (puppeteer: any, word: Word) => {
-
-    const wordUrl = getWordLanguage(word.wordName, word.language)
-    await puppeteer.goto(wordUrl);
-
-    return await puppeteer.evaluate((words: Word) => {
-
-        let {translation, phonetic, wordName, language, phrase} = words;
-
-        translation = translation || document.querySelectorAll('.ToWrd')[1].innerText.split(" ")[0].replace(/[^a-zA-Z ]/g, "")
-        phrase = phrase || document.querySelectorAll('.FrEx')[0].innerText
-        phonetic = phonetic || document.querySelectorAll('.pronWR')[0].innerText
-
-        return {
-            wordName,
-            translation,
-            phonetic,
-            phrase,
-            language
-        }
-    }, word)
-}
-
-const addCard = async (cardData: Word) => {
+const addCard = async (cardData: CardOutput) => {
     const formattedData = await formatData(cardData)
     const {wordAudio, phraseAudio} = cardData;
 
-    const {language, phonetic, phrase, translation, wordName} = formattedData;
-
-    const deck = language === 'en' ? 'English' : 'French'
+    const {language, phonetic, phrase, translation, word} = formattedData;
+    console.log('OI', wordAudio)
+    const deck = language === 'English' ? 'English' : 'French'
     const body = {
         "action": "addNote", "version": 6, "params": {
             "note": {
                 "deckName": `"${deck}"`, "modelName": "Basic", "fields": {
                     "Front": `${phrase}`,
-                    "Back": `${wordName} ${phonetic} <br> ${translation}`
+                    "Back": `${word} ${phonetic} <br> ${translation}`
                 }, "options": {
                     "allowDuplicate": true, "duplicateScope": deck, "duplicateScopeOptions": {
                         "deckName": deck, "checkChildren": true, "checkAllModels": false
@@ -102,42 +68,37 @@ const addCard = async (cardData: Word) => {
         }
     };
 
-    axios.post('http://localhost:8765', body)
+    await axios.post('http://localhost:8765', body)
 }
 
-const getWordLanguage = (wordName: string, language: string) => {
-    const dictionaryUrl = 'https://www.wordreference.com'
 
-    return `${dictionaryUrl}/${language === 'en' ? 'enpt' : 'fren'}/${wordName}`;
-}
-
-const addAudioFiles = (word: Word) => {
+const addAudioFiles = (cardInput: CardInput) => {
     const getUrl = (searchTerm: string) => googleTTS.getAudioUrl(searchTerm, {
-        lang: word.language, slow: false, host: 'https://translate.google.com',
+        lang: cardInput.language === 'English' ? 'en-US' : 'fr', slow: false, host: 'https://translate.google.com',
     });
 
-    const wordAudio = getUrl(word.wordName);
-    const phraseAudio = getUrl(word.phrase);
-
+    const wordAudio = getUrl(cardInput.word);
+    const phraseAudio = getUrl(cardInput.phrase);
+    console.log(wordAudio)
     return {
         wordAudio,
         phraseAudio,
-        ...word
+        ...cardInput
     }
 }
 
 
-const formatData = (word: Word) => {
-    let {phrase, wordName, language, phonetic, translation} = word;
+const formatData = (cardOutput: CardOutput) => {
+    let {phrase, word, language, phonetic, translation} = cardOutput;
     let wordsToFormat: string[] = [];
 
     const splitPhrase = splitSentence(phrase, language);
 
-    const splitWord = splitSentence(wordName)
+    const splitWord = splitSentence(word)
 
-    if (isExpression(splitWord)) {
+    if (isExpression(splitWord!)) {
 
-        const splitWord = splitSentence(wordName);
+        const splitWord = splitSentence(word);
 
         for (let sentence of splitWord!) {
             const {bestMatch} = stringSimilarity.findBestMatch(sentence, splitPhrase!);
@@ -146,7 +107,7 @@ const formatData = (word: Word) => {
             wordsToFormat.push(`${bestMatch.target}`);
         }
     } else {
-        const {bestMatch} = stringSimilarity.findBestMatch(wordName.toLowerCase(), splitPhrase!);
+        const {bestMatch} = stringSimilarity.findBestMatch(word.toLowerCase(), splitPhrase!);
         wordsToFormat.push(`${bestMatch.target}`);
         wordsToFormat[0].toUpperCase()
     }
@@ -155,13 +116,13 @@ const formatData = (word: Word) => {
         phrase = phrase.replace(new RegExp(`\\b${sentence}`, 'i'), `<font color="#7d00bc">${sentence}</font>`);
     }
 
-    wordName = `<font color="#7d00bc">${wordName.toUpperCase()}</font>`
+    word = `<font color="#7d00bc">${word.toUpperCase()}</font>`
     phrase[0].toUpperCase();
     translation = `<b>${translation.toUpperCase()}</b>`
     phonetic = `(${phonetic})`
     return {
         phrase,
-        wordName,
+        word,
         translation,
         phonetic,
         language
@@ -169,6 +130,8 @@ const formatData = (word: Word) => {
 }
 
 const splitSentence = (sentence: string, language?: string) => {
+    if (!sentence)
+        return;
     if (language === 'en')
         return sentence.trimStart().replace(/[^a-zA-Z0-9 ]/g, '').split(' ');
     else {

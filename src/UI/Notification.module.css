@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
 .notification {
-    position: fixed;
-    bottom: 0;
     margin-bottom: 25px;
     height: 5rem;
     width: 100%;
@@ -14,7 +12,7 @@
     align-content: center;
     flex-direction: row;
     z-index: 3;
-    font-family: 'Montserrat';
+    font-family: 'Montserrat', serif;
 }
 
 .pending {

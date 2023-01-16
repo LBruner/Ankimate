@@ -1,7 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import {processCards} from "../../helpers/cards";
-import {getPuppeteerPage} from "../../helpers/puppeteer";
-
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
         

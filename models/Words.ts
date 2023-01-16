@@ -1,7 +1,7 @@
 import {CardInput} from "./WordInput";
-import {languageConfig} from "./Card";
 
-export interface WordsData{
-    language: languageConfig,
+export type Language = 'English' | 'French';
+
+export interface WordsData {
     words: CardInput[],
-    deck: string}
+}

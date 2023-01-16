@@ -1,7 +1,5 @@
 import {Dispatch, SetStateAction} from "react";
-import {languageConfig} from "./Card";
-import {Language} from "../src/WordInput/WordInputForm";
-
+import {Language} from "./Words";
 
 export interface WordInputFormProps {
     isAnkiConnected: boolean;
@@ -51,18 +49,3 @@ export interface WordInput {
     isFirstElement: boolean,
     isLastElement: boolean,
 }
-
-export interface DeckProps{
-    deck: string,
-    setDeck: (selectedDeck: string) => void,
-}
-
-export interface languagePickerProps{
-    setDeck: (selectedDeck: string) => void,
-    language: languageConfig,
-    setLanguage: (newLang: languageConfig) => void
-}
-
-export type availableOutputs = 'en' | 'pt'
-
-export type availableInput = 'en' | 'fr'

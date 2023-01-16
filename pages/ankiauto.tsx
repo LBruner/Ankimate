@@ -1,12 +1,12 @@
 import React, {useState} from "react";
 import {useSelector} from "react-redux";
 import {RootState} from "../src/store/StoreIndex";
-import WaitScreen from "../src/UI/WaitScreen";
-import WordInputForm, {getDefaultState, Language} from "../src/WordInput/WordInputForm";
+import WordInputForm, {getDefaultState} from "../src/WordInput/WordInputForm";
 import AnkiConnectionFeedback from "../src/API/AnkiConnectionFeedback";
 import Notification from "../src/UI/Notification";
 import {CardInput} from "../models/WordInput";
 import ToolBox from "../src/UI/Toolbox";
+import {Language} from "../models/Words";
 
 const Ankiauto: React.FC = _ => {
     const [isAnkiConnected, setIsAnkiConnected] = useState<boolean>(false);
@@ -17,8 +17,8 @@ const Ankiauto: React.FC = _ => {
 
     return (
         <>
-            <WaitScreen/>
-            <ToolBox wordsListLength={wordsList.length}/>
+            {/*<WaitScreen/>*/}
+            <ToolBox setWordList={setWordsList} wordsListLength={wordsList.length}/>
             <WordInputForm isAnkiConnected={isAnkiConnected} wordState={{setWordsList, wordsList}}
                            language={{curLanguage, setCurLanguage}}/>
             <AnkiConnectionFeedback isAnkiConnected={isAnkiConnected} setIsAnkiConnected={setIsAnkiConnected}/>

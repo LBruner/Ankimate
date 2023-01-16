@@ -1,18 +1,13 @@
 import WordInput from "./WordInput";
 import {CardInput, WordInputListProps} from "../../models/WordInput";
-import {useDispatch} from "react-redux";
-import {uiActions} from "../store/UISlice";
 import React from "react";
 import {getDefaultState, Language} from "./WordInputForm";
 
 const WordInputList: React.FC<WordInputListProps> = ({wordList, setWordList, languageConfig}) => {
-    const dispatch = useDispatch();
-
     const onUpdateWord = (input: CardInput, index: number) => {
         let newArray = [...wordList];
         newArray[index] = input;
         setWordList(newArray)
-        dispatch(uiActions.setFieldCount({fieldCount: wordList.length - 1}))
     }
 
     const addInput = () => {
@@ -41,9 +36,7 @@ const WordInputList: React.FC<WordInputListProps> = ({wordList, setWordList, lan
             return [...prevState]
         })
     }
-
-    let isEnglishSet = true;
-
+    
     const wordFunctions = {onUpdateWord, addInput, onDeleteWord: onDeleteInput, changeCardLanguage};
     return (
         <div>

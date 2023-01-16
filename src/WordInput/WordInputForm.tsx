@@ -7,30 +7,28 @@ import {nanoid} from "nanoid";
 import {WordInputFormProps} from "../../models/WordInput";
 import {CgFileAdd} from 'react-icons/cg';
 import {VscFiles} from 'react-icons/vsc';
+import {WordsData} from "../../models/Words";
+import axios from "axios";
+import CardAPIResponse from "../../models/API";
+import {getNotificationMessage} from "../../models/Notification";
 
 export const getDefaultState = () => {
     return {id: nanoid(), translation: '', phonetic: '', phrase: '', word: ''};
 };
 
-
 //TODO refactor language
-export type Language = 'English' | 'French';
 
 const WordInputForm: React.FC<WordInputFormProps> = ({isAnkiConnected, language, wordState}) => {
-    //TODO: refactor deck picking
     const {curLanguage, setCurLanguage} = language;
     const {setWordsList, wordsList} = wordState;
 
     const dispatch = useDispatch();
-    //TODO refactor
-
 
     useEffect(() => {
         if (window && wordsList.length > 1)
             window.onbeforeunload = () => {
                 return `are you sure?`
             }
-
     }, [])
     
     const onSubmitHandler = async (e: React.FormEvent) => {
@@ -38,17 +36,17 @@ const WordInputForm: React.FC<WordInputFormProps> = ({isAnkiConnected, language,
 
         dispatch(uiActions.toggleIsWaiting());
 
-        // const wordsData: WordsData = { words: wordsList, deck: curDeck, language };
+        const wordsData: WordsData = {words: wordsList};
         let notification;
+        console.log(wordsList)
+        const response = await axios.post<CardAPIResponse>('http://localhost:3000/api/addCards', wordsData);
 
-        // const response = await axios.post<CardAPIResponse>('http://localhost:3000/api/addCards', wordsData);
-
-        // try {
-        //     notification = getNotificationMessage(response.data);
-        // } catch (error) {
-        //     // notification = getNotificationMessage(error as AxiosError<{ error: string }>, null);
-        // } finally {
-        // }
+        try {
+            notification = getNotificationMessage(response.data);
+        } catch (error) {
+            // notification = getNotificationMessage(error as AxiosError<{ error: string }>, null);
+        } finally {
+        }
         dispatch(uiActions.showNotification(notification));
 
         dispatch(uiActions.toggleIsWaiting());
