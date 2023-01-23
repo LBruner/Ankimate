@@ -2,7 +2,7 @@ import classes from './WordInput.module.css';
 import React, {useEffect, useRef, useState} from "react";
 import {CardInput, WordInput} from "../../models/WordInput";
 import CardOptions from "../language/CardOptions";
-import {Language} from "./WordInputForm";
+import {Language} from "../../models/Words";
 
 const WordInput: React.FC<WordInput> = (props) => {
     const {id, index, isFirstElement, isLastElement, languageConfig, isEnglishSet} = props;
@@ -22,7 +22,7 @@ const WordInput: React.FC<WordInput> = (props) => {
     }, [isEnglishSet]);
 
 
-    const onWordUpdate = (_: React.ChangeEvent) => {
+    const onWordUpdate = () => {
         const wordInput: CardInput = {
             id,
             word: wordRef.current!.value,
@@ -60,16 +60,16 @@ const WordInput: React.FC<WordInput> = (props) => {
         changeCardLanguage(id, 'French')
         languageConfig.setLanguage("French");
     }
-
+    
     const componentClasses = `${classes['input-container']} ${isEnglishSet ? classes.english : classes.french}`
     return (
         <div className={componentClasses}>
-            <input onChange={onWordUpdate} required={isRequired} ref={wordRef} type="text"
+            <input onChange={onWordUpdate} onDrop={onWordUpdate} required={isRequired} ref={wordRef} type="text"
                    placeholder="Word..."/>
-            <input onChange={onWordUpdate} ref={phoneticRef} type="text" placeholder="Phonetic..."/>
-            <input onChange={onWordUpdate} ref={phraseRef} type="text"
+            <input onChange={onWordUpdate} onDrop={onWordUpdate} ref={phoneticRef} type="text" placeholder="Phonetic..."/>
+            <input onChange={onWordUpdate} onDrop={onWordUpdate} ref={phraseRef} type="text"
                    placeholder="Phrase..."/>
-            <input onChange={onWordUpdate} ref={translationRef} type="text"
+            <input onChange={onWordUpdate} onDrop={onWordUpdate} ref={translationRef} type="text"
                    placeholder="Translation..."/>
             <CardOptions changeCardLanguage={{setFrench, setEnglish}} isEnglishSet={isEnglishSet}
                          setLanguage={languageConfig.setLanguage} isFirstElement={isFirstElement}

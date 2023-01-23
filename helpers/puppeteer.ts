@@ -7,8 +7,6 @@ export const getPuppeteerPage = async () => {
 }
 
 export const fetchData = async (puppeteer: any, word: CardInput) => {
-    console.log(word.translation)
-
     const wordUrl = getWordLanguage(word.word, word.language)
     await puppeteer.goto(wordUrl);
 

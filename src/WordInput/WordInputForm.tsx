@@ -38,7 +38,6 @@ const WordInputForm: React.FC<WordInputFormProps> = ({isAnkiConnected, language,
 
         const wordsData: WordsData = {words: wordsList};
         let notification;
-        console.log(wordsList)
         const response = await axios.post<CardAPIResponse>('http://localhost:3000/api/addCards', wordsData);
 
         try {

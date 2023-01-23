@@ -15,13 +15,13 @@ export const processCards = async (data: { words: Array<CardInput> }) => {
     const cardsResults: cardsResults = {addedCards: [], failedCards: []};
 
     for (const inputData of data.words) {
-
+        console.log(inputData)
         if (!inputData.word) {
             continue;
         }
 
         try {
-            const data: CardOutput = await fetchData(puppeteer, inputData)
+            const data: CardOutput = await fetchData(puppeteer, inputData);
             const audioData: CardOutput = addAudioFiles(data);
             await addCard(audioData)
             cardsResults.addedCards.push(inputData.word)
@@ -41,7 +41,6 @@ const addCard = async (cardData: CardOutput) => {
     const {wordAudio, phraseAudio} = cardData;
 
     const {language, phonetic, phrase, translation, word} = formattedData;
-    console.log('OI', wordAudio)
     const deck = language === 'English' ? 'English' : 'French'
     const body = {
         "action": "addNote", "version": 6, "params": {
@@ -79,7 +78,6 @@ const addAudioFiles = (cardInput: CardInput) => {
 
     const wordAudio = getUrl(cardInput.word);
     const phraseAudio = getUrl(cardInput.phrase);
-    console.log(wordAudio)
     return {
         wordAudio,
         phraseAudio,
