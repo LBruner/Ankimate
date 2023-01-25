@@ -64,12 +64,12 @@ const WordInput: React.FC<WordInput> = (props) => {
     const componentClasses = `${classes['input-container']} ${isEnglishSet ? classes.english : classes.french}`
     return (
         <div className={componentClasses}>
-            <input onChange={onWordUpdate} onDrop={onWordUpdate} required={isRequired} ref={wordRef} type="text"
+            <input onChange={onWordUpdate} onPaste={onWordUpdate} onDrop={onWordUpdate} required={isRequired} ref={wordRef} type="text"
                    placeholder="Word..."/>
-            <input onChange={onWordUpdate} onDrop={onWordUpdate} ref={phoneticRef} type="text" placeholder="Phonetic..."/>
-            <input onChange={onWordUpdate} onDrop={onWordUpdate} ref={phraseRef} type="text"
+            <input onChange={onWordUpdate} onPaste={onWordUpdate} onDrop={onWordUpdate} ref={phoneticRef} type="text" placeholder="Phonetic..."/>
+            <input onChange={onWordUpdate} onPaste={onWordUpdate} onDrop={onWordUpdate} ref={phraseRef} type="text"
                    placeholder="Phrase..."/>
-            <input onChange={onWordUpdate} onDrop={onWordUpdate} ref={translationRef} type="text"
+            <input onChange={onWordUpdate} onPaste={onWordUpdate} onDrop={onWordUpdate} ref={translationRef} type="text"
                    placeholder="Translation..."/>
             <CardOptions changeCardLanguage={{setFrench, setEnglish}} isEnglishSet={isEnglishSet}
                          setLanguage={languageConfig.setLanguage} isFirstElement={isFirstElement}
