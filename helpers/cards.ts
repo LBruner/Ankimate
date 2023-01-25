@@ -113,7 +113,6 @@ const formatData = (cardOutput: CardOutput) => {
     for (let sentence of wordsToFormat) {
         phrase = phrase.replace(new RegExp(`\\b${sentence}`, 'i'), `<font color="#7d00bc">${sentence}</font>`);
     }
-
     word = `<font color="#7d00bc">${word.toUpperCase()}</font>`
     phrase[0].toUpperCase();
     translation = `<b>${translation.toUpperCase()}</b>`

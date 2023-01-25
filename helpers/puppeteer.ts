@@ -13,7 +13,7 @@ export const fetchData = async (puppeteer: any, word: CardInput) => {
     return await puppeteer.evaluate((words: CardInput) => {
         let {translation, phonetic, word, language, phrase} = words;
 
-        translation = translation || document.querySelectorAll('.ToWrd')[1].innerText.split(" ")[0].replace(/[^a-zA-Z ]/g, "")
+        translation = translation || document.querySelectorAll('.ToWrd')[1].innerText.split(" ")[0]
         phrase = phrase || document.querySelectorAll('.FrEx')[0].innerText
 
         if (word.split(' ').length == 1)
