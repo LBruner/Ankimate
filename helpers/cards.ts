@@ -114,9 +114,16 @@ const formatData = (cardOutput: CardOutput) => {
         phrase = phrase.replace(new RegExp(`\\b${sentence}`, 'i'), `<font color="#7d00bc">${sentence}</font>`);
     }
     word = `<font color="#7d00bc">${word.toUpperCase()}</font>`
-    phrase[0].toUpperCase();
-    translation = `<b>${translation.toUpperCase()}</b>`
-    phonetic = phonetic.length > 0 ? `(${phonetic})` : ''
+    console.log(
+    phrase[0].match(/[^a-zA-Z0-9]/g)
+    )
+    const hasEspecialChar = translation[translation.length - 1].replace(/[^a-zA-Z0-9]/g, '');
+
+    if(hasEspecialChar === ''){
+        console.log(translation[translation.length - 1])
+        translation = translation.slice(0, translation.length - 1).toUpperCase();
+    }
+
     return {
         phrase,
         word,

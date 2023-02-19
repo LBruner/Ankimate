@@ -66,7 +66,7 @@ const WordInputForm: React.FC<WordInputFormProps> = ({isAnkiConnected, language,
             <WordInputList wordList={wordsList} setWordList={setWordsList}
                            languageConfig={{curLanguage, setLanguage: setCurLanguage}}/>
             <button disabled={shouldDisableButton} className={classes['add-card-btn']}
-                    type={"submit"}>Add {wordsList.length > 1 ? `${wordsList.length} Cards` : 'Cards'} {wordsList.length === 1 ?
+                    type={"submit"}>Add {wordsList.length > 1 ? `${wordsList.length - 1} Cards` : 'Cards'} {wordsList.length === 1 ?
                 <CgFileAdd className={classes.icon}/> : <VscFiles className={classes.icon}/>}
             </button>
         </form>
