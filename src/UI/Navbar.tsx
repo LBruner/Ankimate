@@ -13,7 +13,7 @@ const Navbar: React.FC = _ => {
                     <p>Ankimate</p>
                 </div>
                 <div className={classes.options}>
-                    <Link href={'/ankiauto'}>Add Cards</Link>
+                    <Link href={'/ankimate'}>Add Cards</Link>
                     <Link href={'/user'}>Stats</Link>
                 </div>
             </div>

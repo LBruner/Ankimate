@@ -8,7 +8,7 @@ import React from "react";
 function MyApp({ Component, pageProps }: AppProps) {
   return <>    
     <Head>
-      <title>Ankiauto</title>
+      <title>Ankimate</title>
       <link rel="shortcut icon" href="/favicon.png" />
       <meta name="description" content="Anki automated cards"/>
       <meta name={"viewport"} content={"initial-scale=1.0, width=device-width"} />
