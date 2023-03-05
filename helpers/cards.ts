@@ -15,7 +15,6 @@ export const processCards = async (data: { words: Array<CardInput> }) => {
     const cardsResults: cardsResults = {addedCards: [], failedCards: []};
 
     for (const inputData of data.words) {
-        console.log(inputData)
         if (!inputData.word) {
             continue;
         }
@@ -47,7 +46,7 @@ const addCard = async (cardData: CardOutput) => {
             "note": {
                 "deckName": `"${deck}"`, "modelName": "Basic", "fields": {
                     "Front": `${phrase}`,
-                    "Back": `${word} ${phonetic} <br> ${translation}`
+                    "Back": `${word} ${phonetic === '' ? `` : `(${phonetic})`} <br> <b>${translation}</b>`
                 }, "options": {
                     "allowDuplicate": true, "duplicateScope": deck, "duplicateScopeOptions": {
                         "deckName": deck, "checkChildren": true, "checkAllModels": false
@@ -95,11 +94,10 @@ const formatData = (cardOutput: CardOutput) => {
     const splitWord = splitSentence(word)
 
     if (isExpression(splitWord!)) {
-
         const splitWord = splitSentence(word);
 
         for (let sentence of splitWord!) {
-            const {bestMatch} = stringSimilarity.findBestMatch(sentence, splitPhrase!);
+            const {bestMatch} = stringSimilarity.findBestMatch(sentence.toLowerCase(), splitPhrase!);
 
             if (bestMatch.rating < 0.5) continue;
             wordsToFormat.push(`${bestMatch.target}`);
@@ -114,21 +112,19 @@ const formatData = (cardOutput: CardOutput) => {
         phrase = phrase.replace(new RegExp(`\\b${sentence}`, 'i'), `<font color="#7d00bc">${sentence}</font>`);
     }
     word = `<font color="#7d00bc">${word.toUpperCase()}</font>`
-    console.log(
-    phrase[0].match(/[^a-zA-Z0-9]/g)
-    )
+
     const hasEspecialChar = translation[translation.length - 1].replace(/[^a-zA-Z0-9]/g, '');
 
-    if(hasEspecialChar === ''){
-        console.log(translation[translation.length - 1])
+    if (hasEspecialChar === '') {
         translation = translation.slice(0, translation.length - 1).toUpperCase();
     }
 
+    translation = translation.toUpperCase();
     return {
         phrase,
         word,
         translation,
-        phonetic,
+        phonetic: phonetic.replaceAll('/', ''),
         language
     }
 }
@@ -137,10 +133,10 @@ const splitSentence = (sentence: string, language?: string) => {
     if (!sentence)
         return;
     if (language === 'en')
-        return sentence.trimStart().replace(/[^a-zA-Z0-9 ]/g, '').split(' ');
+        return sentence.trimStart().trimEnd().replace(/[^a-zA-Z0-9 ]/g, '').split(' ');
     else {
 
-        return sentence.trimStart().split(' ')
+        return sentence.trimStart().trimEnd().split(' ')
     }
 };
 

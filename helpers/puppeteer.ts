@@ -16,10 +16,11 @@ export const fetchData = async (puppeteer: any, word: CardInput) => {
         translation = translation || document.querySelectorAll('.ToWrd')[1].innerText.split(" ")[0]
         phrase = phrase || document.querySelectorAll('.FrEx')[0].innerText
 
-        if (word.split(' ').length == 1)
+        if (word.trim().split(' ').length == 1)
             phonetic = phonetic || document.querySelectorAll('.pronWR')[0].innerText
         else
             phonetic = ''
+
         return {
             word,
             translation,
@@ -33,5 +34,5 @@ export const fetchData = async (puppeteer: any, word: CardInput) => {
 const getWordLanguage = (wordName: string, language: string) => {
     const dictionaryUrl = 'https://www.wordreference.com'
 
-    return `${dictionaryUrl}/${language === 'English' ? 'enpt' : 'fren'}/${wordName}`;
+    return `${dictionaryUrl}/${language === 'English' ? 'enpt' : 'fren'}/${wordName.toLowerCase()}`;
 }
